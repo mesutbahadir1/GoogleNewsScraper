@@ -1,0 +1,6 @@
+@NewsScrapper_HostAddress = http://localhost:5070
+
+GET {{NewsScrapper_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
