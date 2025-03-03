@@ -31,16 +31,7 @@ namespace NewsScrapper.Services
                     
                     var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
                     
-                    // Log the page source for debugging
-                   
-                    Console.WriteLine("Page Source:");
-                    Console.WriteLine(driver.PageSource);
-                    Console.WriteLine("hello world");
-                    
-                    // Updated CSS selectors based on provided HTML
                     var articleElements = driver.FindElements(By.CssSelector("article.IFHyqb.DeXSAc"));
-
-                    Console.WriteLine($"Found {articleElements.Count} article elements");
                     
                     foreach (var articleElement in articleElements.Take(50))
                     {
@@ -73,19 +64,12 @@ namespace NewsScrapper.Services
                             if (!string.IsNullOrEmpty(newsArticle.Title))
                             {
                                 articles.Add(newsArticle);
-                                Console.WriteLine($"Added article: {newsArticle.Title}");
                             }
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine($"Error extracting article: {ex.Message}");
                         }
-                    }
-                    
-                    if (articles.Count == 0)
-                    {
-                        Console.WriteLine("No articles found. Trying alternative approach...");
-                        articles = await ScrapeGoogleSearchAsync(driver, searchQuery);
                     }
                 }
                 catch (Exception ex)
@@ -98,54 +82,6 @@ namespace NewsScrapper.Services
             }
         }
         
-        private async Task<List<NewsArticle>> ScrapeGoogleSearchAsync(IWebDriver driver, string searchQuery)
-        {
-            var articles = new List<NewsArticle>();
-            
-            try
-            {
-                driver.Navigate().GoToUrl($"https://www.google.com/search?q={Uri.EscapeDataString(searchQuery)}&tbm=nws&hl=tr");
-                await Task.Delay(3000);
-                
-                var newsResults = driver.FindElements(By.CssSelector("div.SoaBEf, div.WlydOe"));
-                
-                foreach (var result in newsResults.Take(50))
-                {
-                    try
-                    {
-                        var newsArticle = new NewsArticle();
-                        
-                        var titleElement = result.FindElements(By.CssSelector("h3, div.mCBkyc")).FirstOrDefault();
-                        newsArticle.Title = titleElement?.Text ?? string.Empty;
-                        
-                        var linkElement = result.FindElements(By.CssSelector("a")).FirstOrDefault();
-                        newsArticle.Link = linkElement?.GetAttribute("href") ?? string.Empty;
-                        
-                        var imageElement = result.FindElements(By.CssSelector("img")).FirstOrDefault();
-                        newsArticle.ImageUrl = imageElement?.GetAttribute("src") ?? string.Empty;
-                        
-                        var timeElement = result.FindElements(By.CssSelector("span.OSrXXb")).FirstOrDefault();
-                        newsArticle.PublishDate = timeElement?.Text ?? string.Empty;
-                        
-                        if (!string.IsNullOrEmpty(newsArticle.Title))
-                        {
-                            articles.Add(newsArticle);
-                            Console.WriteLine($"Added article from search: {newsArticle.Title}");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error extracting search result: {ex.Message}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error during Google Search scraping: {ex.Message}");
-            }
-            
-            return articles;
-        }
     }
 }
 
