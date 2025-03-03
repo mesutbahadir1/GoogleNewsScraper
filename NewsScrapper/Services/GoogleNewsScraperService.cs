@@ -35,6 +35,7 @@ namespace NewsScrapper.Services
                    
                     Console.WriteLine("Page Source:");
                     Console.WriteLine(driver.PageSource);
+                    Console.WriteLine("hello world");
                     
                     // Updated CSS selectors based on provided HTML
                     var articleElements = driver.FindElements(By.CssSelector("article.IFHyqb.DeXSAc"));
