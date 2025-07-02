@@ -1,20 +1,22 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Google News Scraper
+Google News Scraper, ücretli haber API’lerine alternatif olarak, verilen arama sorgusuna göre Google Haberler üzerinde otomatik arama yapıp, ilgili haber başlıklarını, bağlantılarını, görsellerini ve yayın tarihlerini ücretsiz şekilde çeken .NET Core tabanlı bir web servisidir.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# Özellikler
+Google News sayfasını Selenium ile headless Chrome tarayıcıda gezerek haberleri kazır.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Haber başlığı, link, görsel ve yayın tarihi bilgilerini çıkarır.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Maksimum döndürülen haber sayısı varsayılan olarak 50 ile sınırlandırılmıştır, fakat bu değer ihtiyaç halinde değiştirilebilir.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Basit bir REST API üzerinden sorgu parametresi ile haber araması yapılabilir.
+
+# Kullanım
+API endpoint:
+GET /api/news?query={arama_kelimesi}
+
+Örnek:
+GET /api/news?query=borsa
+
+# Görsel 
+<img width="1133" alt="image" src="https://github.com/user-attachments/assets/69d66198-e9cd-43a8-9f1f-53f01bc1b0c1" />
+
